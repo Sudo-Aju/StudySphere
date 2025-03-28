@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study Planner - StudySphere</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Hatton:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Users/azmeerpirani/Downloads/Website/Design/Eport/Css.css">
+    <style>
+        body {
+            background-color: #011e31;
+            color: #BAC9D4;
+            letter-spacing: 0.05em; 
+            font-size: 18px; /* Increase base font size */
+        }
+        .form-section {
+            margin-top: 50px;
+        }
+        .study-planner {
+            margin-top: 30px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            color: #011E31; 
+        }
+        .study-planner h2 {
+            font-size: 28px; /* Increase heading font size */
+        }
+        .gantt-chart {
+            margin-top: 20px;
+            border: 1px solid #BAC9D4;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .gantt-bar {
+            height: 30px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            line-height: 30px; /* Center text vertically */
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #004369;">
+    <a class="navbar-brand" href="#">
+        <img src="/Users/azmeerpirani/Downloads/Website/Design/Eport/Logo.png" alt="Logo" class="logo" style="height: 60px;">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="Home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="Welcome.html">Welcome Page</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="Tools.html">Tools</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="About.html">About Us</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container form-section">
+    <h1 class="text-center mb-5">Smart Study Planner</h1>
+    <form id="study-planner-form">
+        <div class="form-group">
+            <label for="subject">Subject:</label>
+            <input type="text" class="form-control" id="subject" required>
+        </div>
+        <div class="form-group">
+            <label for="timeline">Timeline (e.g., 4 days):</label>
+            <input type="text" class="form-control" id="timeline" required>
+        </div>
+        <div class="form-group">
+            <label for="topics">Topics to Cover:</label>
+            <textarea class="form-control" id="topics" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="syllabus">Syllabus Details:</label>
+            <textarea class="form-control" id="syllabus" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="study-method">Preferred Study Method:</label>
+            <input type="text" class="form-control" id="study-method" placeholder="e.g., Visual, Auditory, Kinesthetic">
+        </div>
+        <div class="form-group">
+            <label for="study-time">Daily Study Time (in hours):</label>
+            <input type="number" class="form-control" id="study-time" required>
+        </div>
+        <div class="form-group">
+            <label for="resources">Resources Needed:</label>
+            <input type="text" class="form-control" id="resources" placeholder="e.g., Books, Videos, Articles">
+        </div>
+        <div class="form-group">
+            <label for="goals">Learning Goals:</label>
+            <input type="text" class="form-control" id="goals" placeholder="e.g., Understand concepts, Practice problems">
+        </div>
+        <div class="form-group">
+            <label for="challenges">Potential Challenges:</label>
+            <input type="text" class="form-control" id="challenges" placeholder="e.g., Time management, Difficult topics">
+        </div>
+        <div class="form-group">
+            <label for="daily-hours">Daily Study Hours:</label>
+            <div id="daily-hours-container">
+                <input type="number" class="form-control daily-hours" placeholder="Day 1" required>
+                <input type="number" class="form-control daily-hours" placeholder="Day 2" required>
+                <input type="number" class="form-control daily-hours" placeholder="Day 3" required>
+                <input type="number" class="form-control daily-hours" placeholder="Day 4" required>
+                <!-- Add more inputs as needed based on the timeline -->
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Study Planner</button>
+    </form>
+
+    <div class="study-planner" id="study-planner" style="display:none;">
+        <h2 class="text-center">Your Study Planner</h2>
+        <div id="planner-details"></div>
+        <div class="gantt-chart" id="gantt-chart" style="display:none;">
+            <h3>Gantt Chart</h3>
+            <div id="gantt-details"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('study-planner-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Gather form data
+        const subject = document.getElementById('subject').value;
+        const timeline = document.getElementById('timeline').value;
+        const topics = document.getElementById('topics').value;
+        const syllabus = document.getElementById('syllabus').value;
+        const studyMethod = document.getElementById('study-method').value;
+        const resources = document.getElementById('resources').value;
+        const goals = document.getElementById('goals').value;
+        const challenges = document.getElementById('challenges').value;
+
+        // Gather daily study hours
+        const dailyHours = Array.from(document.querySelectorAll('.daily-hours')).map(input => input.value);
+
+        // Display the study planner
+        const plannerDetails = `
+            <p><strong>Subject:</strong> ${subject}</p>
+            <p><strong>Timeline:</strong> ${timeline}</p>
+            <p><strong>Topics to Cover:</strong> ${topics}</p>
+            <p><strong>Syllabus Details:</strong> ${syllabus}</p>
+            <p><strong>Preferred Study Method:</strong> ${studyMethod}</p>
+            <p><strong>Resources Needed:</strong> ${resources}</p>
+            <p><strong>Learning Goals:</strong> ${goals}</p>
+            <p><strong>Potential Challenges:</strong> ${challenges}</p>
+        `;
+
+        document.getElementById('planner-details').innerHTML = plannerDetails;
+        document.getElementById('study-planner').style.display = 'block'; // Show the planner
+
+        // Generate Gantt chart
+        generateGanttChart(subject, timeline, dailyHours);
+    });
+
+    function generateGanttChart(subject, timeline, dailyHours) {
+        const ganttDetails = document.getElementById('gantt-details');
+        ganttDetails.innerHTML = ''; // Clear previous details
+
+        const totalDays = parseInt(timeline.split(' ')[0]); // Assuming timeline is in the format "X days"
+
+        for (let i = 0; i < totalDays; i++) {
+            const hoursPerDay = dailyHours[i] || 0; // Get daily hours or default to 0
+            const ganttBar = document.createElement('div');
+            ganttBar.className = 'gantt-bar';
+            ganttBar.style.width = `${(hoursPerDay / (totalDays * 8)) * 100}%`; // Assuming 8 hours is the max for full width
+            ganttBar.textContent = `Day ${i + 1}: ${subject} - ${hoursPerDay} hours`;
+            ganttDetails.appendChild(ganttBar);
+        }
+
+        document.getElementById('gantt-chart').style.display = 'block'; // Show the Gantt chart
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools - StudySphere</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/Users/azmeerpirani/Downloads/Website/Design/Eport/Css.css">
+    
+    <style>
+        body {
+            background-color: #004369;
+            font-family: 'Anton', sans-serif;
+            letter-spacing: 0.05em;
+        }
+        .tool-box {
+            border: 1px solid #BAC9D4;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #004369;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        .tool-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .tool-title {
+            font-size: 14px;
+            color: #BAC9D4;
+            margin-bottom: 10px;
+        }
+        .tool-name {
+            font-size: 24px;
+            color: #BAC9D4;
+            margin-bottom: 10px;
+        }
+        .tool-link {
+            color: #BAC9D4;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        .tool-link:hover {
+            color: #ffffff;
+        }
+        .tool-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .tool-image-container {
+            overflow: hidden;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body style="background-color: #011e31; color: #BAC9D4;">
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #004369;">
+    <a class="navbar-brand" href="#">
+        <img src="/Users/azmeerpirani/Downloads/Website/Design/Eport/Logo.png" alt="Logo" class="logo" style="height: 60px;">    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="Home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="Welcome.html">Welcome Page</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="#">Tools</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="About.html">About Us</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid mt-5">
+    <h1 class="text-center mb-5 animate__animated animate__fadeIn" style="color: #BAC9D4; font-size: 48px;">Tools</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-3 mb-4 animate__animated animate__fadeInLeft">
+            <div class="tool-image-container">
+                <img src="/Users/azmeerpirani/Downloads/Website/screenshots/ai_chatbot.jpg" class="tool-image" alt="AI Chatbot">
+            </div>
+            <div class="tool-box animate">
+                <div class="tool-title">Instant Assistance | Contextual Understanding</div>
+                <div class="tool-name">AI chatbot</div>
+                <a href="ai_chatbot.html" class="tool-link">Take me there</a>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4 animate__animated animate__fadeInUp">
+            <div class="tool-image-container">
+                <img src="/Users/azmeerpirani/Downloads/Website/screenshots/translation.jpg" class="tool-image" alt="Real-time Translation">
+            </div>
+            <div class="tool-box animate">
+                <div class="tool-title">Personalised Scheduling | Text driven</div>
+                <div class="tool-name">Smart Study Planner </div>
+                <a href="SmartStudyPlanner.html" class="tool-link">Take me there</a>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4 animate__animated animate__fadeInRight">
+            <div class="tool-image-container">
+                <img src="/Users/azmeerpirani/Downloads/Website/screenshots/etiquette_guide.jpg" class="tool-image" alt="Etiquette Guides">
+            </div>
+            <div class="tool-box animate">
+                <div class="tool-title">Q&A Support | 5 Subjects</div>
+                <div class="tool-name">Subject Guides</div>
+                <a href="subjectguides.html" class="tool-link">Take me there</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toolLinks = document.querySelectorAll('.tool-link');
+        const toolBoxes = document.querySelectorAll('.tool-box');
+
+        toolLinks.forEach(link => {
+            link.addEventListener('mouseover', function() {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip';
+                tooltip.innerText = 'Click to explore this tool!';
+                document.body.appendChild(tooltip);
+                
+                const rect = link.getBoundingClientRect();
+                tooltip.style.position = 'absolute';
+                tooltip.style.left = `${rect.left + window.scrollX}px`;
+                tooltip.style.top = `${rect.bottom + window.scrollY}px`;
+                tooltip.style.backgroundColor = '#333';
+                tooltip.style.color = '#fff';
+                tooltip.style.padding = '5px';
+                tooltip.style.borderRadius = '5px';
+                tooltip.style.zIndex = '1000';
+                
+                link.addEventListener('mouseout', function() {
+                    tooltip.remove();
+                }, { once: true });
+            });
+        });
+
+        toolBoxes.forEach(box => {
+            box.addEventListener('mouseenter', function() {
+                box.classList.add('show');
+            });
+            box.addEventListener('mouseleave', function() {
+                box.classList.remove('show');
+            });
+        });
+    });
+</script>
+</body>
+</html>

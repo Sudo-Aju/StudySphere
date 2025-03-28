@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot - StudySphere</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Users/azmeerpirani/Downloads/Website/Design/eport/Css.css">
+    <style>
+        #chatbox {
+            height: 500px;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background-color: #002852;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .bot-message {
+            background-color: #f1f0f0;
+            color: black;
+            align-self: flex-start;
+        }
+        #chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+        .typing {
+            border-right: .15em solid #000000;
+            white-space: normal;
+            overflow: visible;
+        }
+        body {
+            background-color: #011e31;
+            color: #BAC9D4;
+            letter-spacing: 0.05em;
+        }
+        .social-icons a {
+            color: white;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: skyblue;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #004369;">
+    <a class="navbar-brand" href="#">
+        <img src="/Users/azmeerpirani/Downloads/Website/Design/Eport/Logo.png" alt="Logo" class="logo" style="height: 60px;">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="Home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="Welcome.html">Welcome Page</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="Tools.html">Tools</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-button" href="About.html">About Us</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-5">AI Chatbot</h1>
+    <div class="row">
+        <div class="col-md-5">
+            <img src="/Users/azmeerpirani/Downloads/Website/screenshots/ai_chatbot.jpg" alt="AI Chatbot" class="img-fluid mb-4">
+            <h2>Instant Assistance | Subject Expertise</h2>
+            <p>Our AI chatbot provides instant assistance and answers your queries related to various subjects and topics.</p>
+        </div>
+        <div class="col-md-7">
+            <div id="chat-container">
+                <div id="chatbox"></div>
+                <div class="input-group mb-3">
+                    <input type="text" id="user-input" class="form-control" placeholder="Type your message...">
+                    <div class="input-group-append">
+                        <button onclick="sendMessage()" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const chatbox = document.getElementById('chatbox');
+    const userInput = document.getElementById('user-input');
+
+    function sendMessage() {
+        const message = userInput.value.trim();
+        if (message) {
+            addMessage(message, 'user-message');
+            userInput.value = '';
+            fetchResponse(message);
+        }
+    }
+
+    function addMessage(message, className) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', className);
+        messageElement.textContent = message;
+        chatbox.appendChild(messageElement);
+        chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    async function fetchResponse(message) {
+        const response = await fetch('https://api.deepseek.com/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer sk-a8fc017a3b414e9dad372782264c7346' 
+            },
+            body: JSON.stringify({
+                model: "deepseek-chat",
+                messages: [
+                    { role: "system", content: "You are a helpful assistant" },
+                    { role: "user", content: message }
+                ]
+            })
+        });
+
+        const data = await response.json();
+        const botMessage = data.choices[0].message.content;
+        addMessage(botMessage, 'bot-message');
+    }
+
+    userInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
